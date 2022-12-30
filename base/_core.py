@@ -8,7 +8,7 @@ class BaseModule:
     """
 
     def save_class_attributes(self, ignore=None):
-        """Main save function arguments into class attributes.
+        """Main Save function arguments into class attributes.
 
         """
         frame = inspect.currentframe().f_back
@@ -16,7 +16,9 @@ class BaseModule:
         if ignore is None:
             ignore = []
         self.hparams = {
-            k:v for k,v in local_vars.items() if k not in set(ignore + ['self']) and not k.startswith('_')
+            k: v
+            for k, v in local_vars.items()
+            if k not in set(ignore + ['self']) and not k.startswith('_')
         }
         for k, v in self.hparams.items():
             setattr(self, k, v)
@@ -26,7 +28,16 @@ class BaseTrainer(BaseModule):
     """Base trainer class for all frameworks
 
     """
-    def __init__(self, num_epochs, model, loss, optimizer, train_dataloader, eval_dataloader=None, metrics=None):
+
+    def __init__(self,
+                 logger,
+                 model,
+                 loss,
+                 optimizer,
+                 train_dataloader,
+                 eval_dataloader=None,
+                 metrics=None,
+                 num_epochs=1):
         self.save_class_attributes()
 
     @abc.abstractmethod
