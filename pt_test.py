@@ -40,8 +40,12 @@ if __name__ == '__main__':
 
     saved_path = pathlib.Path('./saved/')
     logger_path = saved_path / 'logs' / f'EXP_{saved_model_name}' / now_str
+    if not logger_path.exists():
+        logger_path.mkdir(parents=True)
     saved_model_path = saved_path / 'models' / saved_model_name / now_str
-    saved_model_path.mkdir(parents=True, exist_ok=True)
+    if not saved_model_path.exists():
+        saved_model_path.mkdir(parents=True)
+    # saved_model_path.mkdir(parents=True, exist_ok=True)
     saved_model_path = saved_model_path / f'{saved_model_name}.pth'
 
     logger = init_logger(logger_path, saved_model_name)
