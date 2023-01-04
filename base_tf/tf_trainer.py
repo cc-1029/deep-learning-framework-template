@@ -6,12 +6,12 @@ class TfTrainer(BaseTrainer):
 
     """
 
-    def train(self, use_custom=True):
+    def train(self, use_custom=False):
         if use_custom:
             for epoch in range(1, self.num_epochs + 1):
-                for step, (x, y) in enumerate(self.train_dataloader):
-                    l = self.training_step(x, y, training=True)
-                pass
+                for step, train_data in enumerate(self.train_dataloader):
+                    loss = self._train_step(train_data)
+                    self.logger.info(f'Epoch: {epoch} Step: {step} Loss: {loss}')
         else:
             # Use tf.keras way to train model
             self.model.compile(loss=self.loss,
@@ -22,3 +22,6 @@ class TfTrainer(BaseTrainer):
                            epochs=self.num_epochs,
                            validation_data=self.eval_dataloader)
             self.model.save(self.saved_model_path)
+
+    def _train_step(self, train_data):
+        raise NotImplementedError
