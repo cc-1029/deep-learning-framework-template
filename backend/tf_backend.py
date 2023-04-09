@@ -1,3 +1,6 @@
+import random
+
+import numpy as np
 import tensorflow as tf
 
 from base import base_trainer
@@ -31,6 +34,10 @@ class TfTrainer(base_trainer.BaseTrainer):
     def _train_step(self, train_data):
         raise NotImplementedError
 
+def seed_everything(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    tf.random.set_seed(seed)
 
 def cpu():
     return tf.device('/CPU:0')
