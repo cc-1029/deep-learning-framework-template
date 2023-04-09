@@ -1,0 +1,40 @@
+{
+    "train_dataloader": {
+        "module": "dataloaders.pt_mnist_dataloaders",
+        "attr": "get_train_dataloader",
+        "use_config_args": true
+    },
+    "val_dataloader": {
+        "module": "dataloaders.pt_mnist_dataloaders",
+        "attr": "get_val_dataloader",
+        "use_config_args": true
+    },
+    "model": {
+        "module": "models.pt_mnist_models",
+        "attr": "PtMnistModel",
+        "use_config_args": true
+    },
+    "loss": {
+        "module": "torch.nn",
+        "attr": "CrossEntropyLoss",
+        "kwargs": {
+        }
+    },
+    "optimizer": {
+        "module": "torch.optim",
+        "attr": "Adam",
+        "kwargs": {
+            "lr": 1e-2
+        }
+    },
+    "trainer": {
+        "module": "trainers.pt_mnist_trainer",
+        "attr": "PtMnistTrainer"
+    },
+    "config_args": {
+        "batch_size": 256,
+        "learning_rate": 1e-3,
+        "num_epochs": 5,
+        "num_labels": 10
+    }
+}

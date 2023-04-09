@@ -17,15 +17,15 @@ def get_train_dataloader(args):
     train_ds = tf.data.Dataset.from_tensor_slices(
         (x_train, y_train)).cache().shuffle(
             buffer_size=x_train.shape[0],
-            seed=42).batch(args.batch_size).prefetch(tf.data.experimental.AUTOTUNE)
+            seed=args.seed).batch(args.batch_size).prefetch(tf.data.experimental.AUTOTUNE)
     return train_ds
 
 
 def get_val_dataloader(args):
     x_train_full, y_train_full = get_mnist()
-    x_eval, y_eval = x_train_full[:5000], y_train_full[:5000]
+    x_val, y_val = x_train_full[:5000], y_train_full[:5000]
     val_ds = tf.data.Dataset.from_tensor_slices(
-        (x_eval, y_eval)).cache().shuffle(buffer_size=x_eval.shape[0],
-                                          seed=42).batch(args.batch_size).prefetch(
+        (x_val, y_val)).cache().shuffle(buffer_size=x_val.shape[0],
+                                          seed=args.seed).batch(args.batch_size).prefetch(
                                               tf.data.experimental.AUTOTUNE)
     return val_ds

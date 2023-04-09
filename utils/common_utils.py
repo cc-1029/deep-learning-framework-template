@@ -53,7 +53,7 @@ class ConfigParser:
 
     def init_trainer(self):
         trainer = self.init_obj('trainer')
-        trainer.set_attrs_from_config_parser(self)
+        trainer.init_components(self)
         return trainer
     
     def init_obj(self, name, *args, **kwargs):

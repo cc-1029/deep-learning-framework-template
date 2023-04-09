@@ -9,7 +9,8 @@ class BaseTrainer:
         for k, v in res_dict.items():
             setattr(self, k, v)
 
-    def set_attrs_from_config_parser(self, parser):
+    @abc.abstractmethod
+    def init_components(self, parser):
         res_dict = {}
         for k, v in parser.config.items():
             if k != 'config_args' and k != 'trainer':
