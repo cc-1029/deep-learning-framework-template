@@ -1,9 +1,9 @@
 import tensorflow as tf
 
-import base_tf
+from backend import tf_backend
 
 
-class TfMnistTrainer(base_tf.TfTrainer):
+class TfMnistTrainer(tf_backend.TfTrainer):
     def _train_step(self, train_data):
         # 定义如何取数据
         inputs, labels = train_data

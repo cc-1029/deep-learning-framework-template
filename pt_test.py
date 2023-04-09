@@ -15,13 +15,13 @@ def get_cli_args():
 
 def init_trainer(parser, logger, saved_model_path):
     train_dataloader = parser.init_obj('train_dataloader')
-    eval_dataloader = parser.init_obj('eval_dataloader')
-    model = parser.init_obj('model')
+    val_dataloader = parser.init_obj('val_dataloader')
+    model = parser.init_obj('models')
     optimizer = parser.init_obj('optimizer', model.parameters())
     loss = parser.init_obj('loss')
-    num_epochs = parser['trainer']['num_epochs']
-    trainer = parser.init_obj('trainer', logger, model, loss, optimizer, train_dataloader,
-                       eval_dataloader=eval_dataloader, num_epochs=num_epochs)
+    num_epochs = parser['trainers']['num_epochs']
+    trainer = parser.init_obj('trainers', logger, model, loss, optimizer, train_dataloader,
+                       val_dataloader=val_dataloader, num_epochs=num_epochs)
     trainer.saved_model_path = str(saved_model_path)
     return trainer
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     ycp = common_utils.YamlConfigParser.from_cli_args(args)
     now_str = datetime.datetime.now().strftime('%Y%m%d_%H%M')
-    saved_model_name = ycp['trainer']['saved_model_name']
+    saved_model_name = ycp['trainers']['saved_model_name']
 
     saved_path = pathlib.Path('./saved/')
     logger_path = saved_path / 'logs' / f'EXP_{saved_model_name}' / now_str

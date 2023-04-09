@@ -3,7 +3,7 @@ import pandas as pd
 
 def reduce_df_memory(df):
     """
-    Transform data type of dataframe's columns to save more memory
+    Transform datasets type of dataframe's columns to save more memory
 
     Args:
         df: DataFrame to transform

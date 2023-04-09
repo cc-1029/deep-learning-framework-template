@@ -7,4 +7,5 @@ class PtCifar10Trainer(base_pt.PtTrainer):
         inputs, labels = train_data
         # 定义forward结果如何取
         outputs = self.model(inputs)
+        print('lables.shape: ', labels.shape, '; outputs.shape: ', outputs.shape)
         return self.loss(outputs, labels)

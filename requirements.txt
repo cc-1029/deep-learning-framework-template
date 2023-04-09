@@ -1,5 +1,5 @@
 numpy
 pandas
-pyyaml
 tensorboard
+tensorflow
 tqdm

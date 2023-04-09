@@ -11,21 +11,21 @@ def get_mnist():
     return x_train_full, y_train_full
 
 
-def get_train_dataloader(batch_size=64):
+def get_train_dataloader(args):
     x_train_full, y_train_full = get_mnist()
     x_train, y_train = x_train_full[5000:], y_train_full[5000:]
     train_ds = tf.data.Dataset.from_tensor_slices(
         (x_train, y_train)).cache().shuffle(
             buffer_size=x_train.shape[0],
-            seed=42).batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE)
+            seed=42).batch(args.batch_size).prefetch(tf.data.experimental.AUTOTUNE)
     return train_ds
 
 
-def get_eval_dataloader(batch_size=64):
+def get_val_dataloader(args):
     x_train_full, y_train_full = get_mnist()
     x_eval, y_eval = x_train_full[:5000], y_train_full[:5000]
-    eval_ds = tf.data.Dataset.from_tensor_slices(
+    val_ds = tf.data.Dataset.from_tensor_slices(
         (x_eval, y_eval)).cache().shuffle(buffer_size=x_eval.shape[0],
-                                          seed=42).batch(batch_size).prefetch(
+                                          seed=42).batch(args.batch_size).prefetch(
                                               tf.data.experimental.AUTOTUNE)
-    return eval_ds
+    return val_ds
