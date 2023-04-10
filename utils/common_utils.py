@@ -12,7 +12,7 @@ class ConfigParser:
         """
         Construct method from cli args
         Args:
-            args: Arguments from the command line
+            cli_args: Arguments from the command line
         """
         assert isinstance(cli_args, argparse.Namespace), 'cli args type error'
         assert 'config' in cli_args.__dict__, '"config" not in the key of cli args'
@@ -23,13 +23,6 @@ class ConfigParser:
             # modify the args based on the cli args
             if k != 'config':
                 config['config_args'][k] = v
-            # modify the learning rate
-            if k == 'learning_rate':
-                assert 'kwargs' in config['optimizer'], '"kwargs" not in the key of config["optimizer"]'
-                if 'lr' in config['optimizer']['kwargs']:
-                    config['optimizer']['kwargs']['lr'] = v
-                else:
-                    config['optimizer']['kwargs']['learning_rate'] = v
         return cls(config)
     
     @abc.abstractmethod
@@ -54,6 +47,7 @@ class ConfigParser:
     def init_trainer(self):
         trainer = self.init_obj('trainer')
         trainer.init_components(self)
+        trainer.init_optimizer(self)
         return trainer
     
     def init_obj(self, name, *args, **kwargs):

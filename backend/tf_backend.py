@@ -9,19 +9,8 @@ class TfTrainer(base_trainer.BaseTrainer):
     """Base trainers class for TensorFlow
 
     """
-
-    def init_components(self, parser):
-        res_dict = {}
-        for k, v in parser.config.items():
-            if k != 'config_args' and k != 'trainer':
-                if type(v) is not list:
-                    res_obj = parser.init_obj(k)
-                else:
-                    res_obj = parser.init_objs(k)
-                res_dict[k] = res_obj
-        for k, v in parser.config_args.__dict__.items():
-            res_dict[k] = v
-        self.set_dict_attrs(res_dict)
+    def init_optimizer(self, parser):
+        self.optimizer = parser.init_obj('optimizer', learning_rate=self.learning_rate)
 
     def train(self):
         if self.use_custom:

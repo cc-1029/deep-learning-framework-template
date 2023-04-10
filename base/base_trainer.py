@@ -9,11 +9,11 @@ class BaseTrainer:
         for k, v in res_dict.items():
             setattr(self, k, v)
 
-    @abc.abstractmethod
     def init_components(self, parser):
+        exclude_keys = ['trainer', 'config_args', 'optimizer']
         res_dict = {}
         for k, v in parser.config.items():
-            if k != 'config_args' and k != 'trainer':
+            if k not in exclude_keys:
                 if type(v) is not list:
                     res_obj = parser.init_obj(k)
                 else:
@@ -22,6 +22,10 @@ class BaseTrainer:
         for k, v in parser.config_args.__dict__.items():
             res_dict[k] = v
         self.set_dict_attrs(res_dict)
+
+    @abc.abstractmethod
+    def init_optimizer(self, parser):
+        raise NotImplementedError
 
     @abc.abstractmethod
     def train(self):
